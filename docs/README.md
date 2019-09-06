@@ -1,4 +1,4 @@
-# phpBB Studio - Spotify OAuth2 light:
+# phpBB Studio - Spotify OAuth2 light
 
 ## Installation
 

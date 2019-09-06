@@ -1,0 +1,43 @@
+/**
+ *
+ * SPL - Spotify OAuth2 light. An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2019, phpBB Studio, https://www.phpbbstudio.com
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
+a[href$="studio_spotify"] {
+	font-family: Montserrat, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 1.3;
+	text-align: center;
+	background: #1b1f23;
+	border-color: #1b1f23;
+	border-radius: 4px;
+	color: #ececec;
+	padding: 4px 8px;
+}
+
+a[href$="studio_spotify"]:hover {
+	background: #15181c;
+	border-color: #1b1f23;
+	color: #1ed760;
+}
+
+a[href$="studio_spotify"]:before {
+	font-family: FontAwesome, sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	vertical-align: -2px;
+	color: #1ed760;
+	margin-right: 6px;
+	content: "\f1bc";
+}
+
+@font-face {
+	font-family: Montserrat;
+	font-weight: 400;
+	font-style: normal;
+	src: url("./fonts/Montserrat-Regular.ttf");
+}

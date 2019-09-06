@@ -1,0 +1,16 @@
+services:
+    phpbbstudio.spl.listener:
+        class: phpbbstudio\spl\event\main_listener
+        arguments:
+            - '@language'
+        tags:
+            - { name: event.listener }
+
+    auth.provider.oauth.service.studio_spotify:
+        class: phpbbstudio\spl\auth\provider\oauth\service\spotify
+        arguments:
+            - '@config'
+            - '@language'
+            - '@request'
+        tags:
+            - { name: auth.provider.oauth.service }

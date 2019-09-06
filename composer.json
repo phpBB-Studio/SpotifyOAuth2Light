@@ -1,0 +1,28 @@
+{
+	"name": "phpbbstudio/spl",
+	"type": "phpbb-extension",
+	"description": "Spotify OAuth2 login for phpBB - light version",
+	"homepage": "https://www.phpbbstudio.com",
+	"version": "1.0.0",
+	"time": "2019-09-06",
+	"license": "GPL-2.0-only",
+	"authors": [
+		{
+			"name": "phpBB Studio",
+			"email": "info@phpbbstudio.com",
+			"homepage": "https://www.phpbbstudio.com",
+			"role": "Lead Developer"
+		}
+	],
+	"require": {
+		"php": ">=5.4.7",
+		"composer/installers": "~1.0",
+		"phpbb-studio/oauth2": "1.2"
+	},
+	"extra": {
+		"display-name": "phpBB Studio - Spotify Oauth2 light",
+		"soft-require": {
+			"phpbb/phpbb": ">=3.2.7,<4.0.0@dev"
+		}
+	}
+}
