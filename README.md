@@ -2,7 +2,7 @@
 
 ## Installation
 
-Copy the extension to phpBB/ext/phpbbstudio/dol
+Copy the extension to phpBB/ext/phpbbstudio/spl
 
 Go to "ACP" > "Customise" > "Extensions" and enable the "phpBB Studio - Spotify OAuth2 light" extension.
 
