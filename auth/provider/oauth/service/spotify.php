@@ -75,7 +75,7 @@ class spotify extends \phpbb\auth\provider\oauth\service\base
 		}
 		catch (TokenResponseException $e)
 		{
-			trigger_error($this->lang->lang('PHPBBSTUDIO_DOL_EXCEPTION_TOKEN', $e->getMessage()), E_USER_WARNING);
+			trigger_error($this->lang->lang('PHPBBSTUDIO_SPL_EXCEPTION_TOKEN', $e->getMessage()), E_USER_WARNING);
 		}
 
 		$result['id'] = '';
