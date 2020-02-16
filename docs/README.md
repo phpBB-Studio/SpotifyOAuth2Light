@@ -24,4 +24,4 @@ replace `http://www.example.com/board` with your Board's URL ;-D
 
 ## License
 
-[GPLv2](license.txt)
+[GPLv2](../license.txt)

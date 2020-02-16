@@ -16,28 +16,116 @@ namespace phpbbstudio\spl;
 class ext extends \phpbb\extension\base
 {
 	/**
-	 * Check whether the extension can be enabled.
-	 * Provides meaningful(s) error message(s) and the back-link on failure.
-	 * CLI compatible
+	 * @var array	An array of installation error messages
+	 */
+	protected $errors = [];
+
+	/**
+	 * Check whether or not the extension can be enabled.
 	 *
-	 * @return bool
+	 * @return bool|array	True if can be enabled. An array of error messages otherwise.
 	 */
 	public function is_enableable()
 	{
-		$is_enableable = true;
+		if (phpbb_version_compare(PHPBB_VERSION, '3.3.0-b1', '>='))
+		{
+			$this->phpbb_requirement();
+			$this->php_requirement();
 
+			return count($this->errors) ? $this->enable_failed() : true;
+		}
+		else
+		{
+			$is_enableable = true;
+
+			if (!$this->phpbb_requirement())
+			{
+				list($user, $lang) = $this->get_language();
+
+				$lang['EXTENSION_NOT_ENABLEABLE'] .= '<br>' . $user->lang('ERROR_PHPBB_VERSION');
+				$is_enableable = false;
+
+				$user->lang = $lang;
+			}
+
+			if (!$this->php_requirement())
+			{
+				list($user, $lang) = $this->get_language();
+
+				$lang['EXTENSION_NOT_ENABLEABLE'] .= '<br>' . $user->lang('ERROR_PHP_VERSION_RHEA');
+				$is_enableable = false;
+
+				$user->lang = $lang;
+			}
+
+			return $is_enableable;
+		}
+	}
+
+	/**
+	 * Generate the best enable failed response for phpBB 3.1/3.2.
+	 *
+	 * @return array
+	 */
+	protected function get_language()
+	{
 		$user = $this->container->get('user');
-		$user->add_lang_ext('phpbbstudio/spl', 'ext_require');
 		$lang = $user->lang;
 
+		$user->add_lang_ext('phpbbstudio/spl', 'ext_require');
+
+		return [$user, $lang];
+	}
+
+	/**
+	 * Check phpBB minimum requirement.
+	 *
+	 * @return void|bool
+	 */
+	protected function phpbb_requirement()
+	{
 		if (!(phpbb_version_compare(PHPBB_VERSION, '3.2.7', '>=') && phpbb_version_compare(PHPBB_VERSION, '4.0.0@dev', '<')))
 		{
-			$lang['EXTENSION_NOT_ENABLEABLE'] .= '<br>' . $user->lang('ERROR_PHPBB_VERSION', '3.2.7', '4.0.0@dev');
-			$is_enableable = false;
+			$this->errors[] = 'ERROR_PHPBB_VERSION';
+
+			return false;
 		}
 
-		$user->lang = $lang;
+		return true;
+	}
 
-		return $is_enableable;
+	/**
+	 * Check PHP minimum requirements.
+	 *
+	 * @return void|bool
+	 */
+	protected function php_requirement()
+	{
+		if (phpbb_version_compare(PHP_VERSION, '5.4.7', '<') && phpbb_version_compare(PHPBB_VERSION, '3.3.0-b1', '<'))
+		{
+			return false;
+		}
+
+		if (phpbb_version_compare(PHP_VERSION, '7.1', '<') && phpbb_version_compare(PHPBB_VERSION, '3.3.0-b1', '>='))
+		{
+			$this->errors[] = 'ERROR_PHP_VERSION_OBERON';
+
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Generate the best enable failed response for phpBB 3.3 or newer.
+	 *
+	 * @return array
+	 */
+	protected function enable_failed()
+	{
+		$language = $this->container->get('language');
+		$language->add_lang('ext_require', 'phpbbstudio/spl');
+
+		return array_map([$language, 'lang'], $this->errors);
 	}
 }
